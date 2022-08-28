@@ -1,10 +1,18 @@
 // require packages used in the project
 const express = require('express')
+const exphbs = require('express-handlebars')
+
 const app = express()
 const PORT = 3000
 
+// setting template engine
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
+app.use(express.static('public'))
+
+
 app.get('/', (req, res) => {
-  res.send('This is Expense Tracker built with Express')
+  res.render('index')
 })
 
 // start and listen on the Express server
