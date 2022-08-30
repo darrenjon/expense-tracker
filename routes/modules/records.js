@@ -5,11 +5,14 @@ const Record = require('../../models/record')
 
 //create new expense
 router.get('/new', (req, res) => {
-  res.send('create new expense page')
+  res.render('new')
 })
 
 router.post('/', (req, res) => {
-  res.send('submit new expense page')
+  const { name, date, amount } = req.body
+  return Record.create({ name, date, amount })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 //edit expense
