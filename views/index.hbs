@@ -1,3 +1,18 @@
+<div class="d-flex justify-content-center dropdown mb-3">
+  <a class="btn btn-outline-secondary dropdown-toggle form-control" href="#" role="button" id="dropdownMenuLink"
+    data-bs-toggle="dropdown" aria-expanded="false">
+    類別
+  </a>
+
+  <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
+    {{#each categories}}
+    <li><a class="dropdown-item" href="#">{{this.name}}</a></li>
+    {{/each}}
+  </ul>
+</div>
+
+<h3>總金額：</h3>
+
 <ul>
   {{#each records}}
   <li>
