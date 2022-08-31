@@ -10,7 +10,9 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/users/login'
+  failureRedirect: '/users/login',
+  failureMessage: true,
+  failureFlash: true
 }))
 
 //register
@@ -20,31 +22,47 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
+  const errors = []
+  if (!name || !email || !password || !confirmPassword) {
+    errors.push({ message: 'Registration failed! Please complete all the required fields to proceed.' })
+  }
+  if (password !== confirmPassword) {
+    errors.push({ message: 'Password incorrect! Please make sure your passwords match' })
+  }
+  if (errors.length) {
+    return res.render('register', {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword
+    })
+  }
   User.findOne({ email }).then(user => {
     if (user) {
-      console.log('User already exists.')
-      res.render('register', {
+      errors.push({ message: 'An account with this email already exists.' })
+      return res.render('register', {
+        errors,
         name,
         email,
         password,
         confirmPassword
       })
-    } else {
-      return User.create({
-        name,
-        email,
-        password
-      })
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err))
     }
+    return User.create({
+      name,
+      email,
+      password
+    })
+      .then(() => res.redirect('/'))
+      .catch(err => console.log(err))
   })
-    .catch(err => console.log(err))
 })
 
 //logout
 router.get('/logout', (req, res) => {
   req.logout()
+  req.flash('success_msg', 'Logout Successful.')
   res.redirect('/users/login')
 })
 
