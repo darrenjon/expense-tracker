@@ -4,7 +4,7 @@ const User = require('../../models/user')
 
 // login
 router.get('/login', (req, res) => {
-  res.send('login page')
+  res.render('login')
 })
 
 router.post('/login', (req, res) => {
@@ -13,7 +13,7 @@ router.post('/login', (req, res) => {
 
 //register
 router.get('/register', (req, res) => {
-  res.send('register page')
+  res.render('register')
 })
 
 router.post('/register', (req, res) => {
