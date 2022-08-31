@@ -4,12 +4,13 @@ const Category = require('../../models/category')
 const Record = require('../../models/record')
 
 router.get('/', async (req, res) => {
-  const categories = await Category.find({})
+  const userId = req.user._id
+  const categories = await Category.find({ userId })
     .lean()
     .sort({ _id: 'asc' })
     .then()
     .catch(error => console.error(error))
-  Record.find()
+  Record.find({ userId })
     .lean()
     .then(records => {
       for (let record of records) {
