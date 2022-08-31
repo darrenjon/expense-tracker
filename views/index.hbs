@@ -1,28 +1,45 @@
-<div class="d-flex justify-content-center dropdown mb-3">
-  <a class="btn btn-outline-secondary dropdown-toggle form-control" href="#" role="button" id="dropdownMenuLink"
-    data-bs-toggle="dropdown" aria-expanded="false">
-    類別
-  </a>
+<div class="mt-3 mx-auto w-75">
 
-  <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
-    {{#each categories}}
-    <li><a class="dropdown-item" href="#">{{this.name}}</a></li>
+  <div>
+    <select class="form-select" aria-label="Default select example">
+      <option selected>選擇類別</option>
+      {{#each categories}}
+      <option value="">{{this.name}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+
+  <div class="m-3">
+    <h3>總金額：</h3>
+  </div>
+
+  <ul class="list-group">
+    {{#each records}}
+    <li class="list-group-item list-group-item-secondary">
+      <div class="row">
+        <div class="col-auto me-auto">
+          <div class="d-flex align-items-center">
+            <i>icon</i>
+            <div class="d-flex row">
+              <span class="ms-3">{{this.name}}</span>
+              <span class="ms-3">{{this.date}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <span class="me-3">{{this.amount}} 元</span>
+          <a class="btn btn-secondary" href="./records/{{ this._id }}/edit">修改</a>
+          <form action="/records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+            <button class="btn btn-danger" type="submit">刪除</button>
+          </form>
+        </div>
+      </div>
+    </li>
     {{/each}}
   </ul>
+
+  <div class="text-center mt-5">
+    <a class="btn btn-warning" href="./records/new">新增支出</a>
+  </div>
 </div>
-
-<h3>總金額：</h3>
-
-<ul>
-  {{#each records}}
-  <li>
-    {{this.name}}:{{this.date}}/{{this.amount}}
-    <a href="./records/{{ this._id }}/edit">修改</a>
-    <form action="/records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-      <button type="submit">刪除</button>
-    </form>
-  </li>
-  {{/each}}
-</ul>
-
-<a href="./records/new">新增支出</a>
