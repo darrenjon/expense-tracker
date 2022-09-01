@@ -5,13 +5,32 @@ if (process.env.NODE_ENV !== 'production') {
 const Category = require('../category')
 const db = require('../../config/mongoose')
 
-const categories = ['家居物業', '交通出行', '休閒娛樂', '餐飲食品', '其他']
+const categories = [
+  {
+    name: '家居物業',
+    icon: "fas fa-home"
+  },
+  {
+    name: '交通出行',
+    icon: "fas fa-shuttle-van"
+  },
+  {
+    name: '休閒娛樂',
+    icon: "fas fa-grin-beam"
+  },
+  {
+    name: '餐飲食品',
+    icon: "fas fa-utensils"
+  },
+  {
+    name: '其他',
+    icon: "fas fa-pen"
+  }
+]
 
 db.once('open', async () => {
   for (let category of categories) {
-    await Category.create({
-      name: category
-    })
+    await Category.create(category)
   }
   console.log('category seed done.')
   process.exit()

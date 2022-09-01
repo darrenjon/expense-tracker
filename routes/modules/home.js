@@ -5,12 +5,13 @@ const Record = require('../../models/record')
 
 router.get('/', async (req, res) => {
   const userId = req.user._id
-  const categories = await Category.find({ userId })
+  const categories = await Category.find({})
     .lean()
     .sort({ _id: 'asc' })
     .then()
     .catch(error => console.error(error))
-  Record.find({ userId })
+  await Record.find({ userId })
+    .populate('categoryId')
     .lean()
     .then(records => {
       let totalAmount = 0

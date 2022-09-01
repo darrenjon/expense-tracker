@@ -4,7 +4,7 @@
     <select class="form-select" aria-label="Default select example">
       <option selected>選擇類別</option>
       {{#each categories}}
-      <option value="">{{this.name}}</option>
+      <option value="{{this._id}}">{{this.name}}</option>
       {{/each}}
     </select>
   </div>
@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-auto me-auto">
           <div class="d-flex align-items-center">
-            <i>icon</i>
+            <i class="{{ this.categoryId.icon }} fa-2x"></i>
             <div class="d-flex row">
               <span class="ms-3">{{this.name}}</span>
               <span class="ms-3">{{this.date}}</span>
