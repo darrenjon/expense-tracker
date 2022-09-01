@@ -5,15 +5,8 @@ const Record = require('../../models/record')
 
 //create new expense
 router.get('/new', (req, res) => {
-  const category = []
-  Category.find()
-    .lean()
-    .then(data => {
-      data.forEach(item => {
-        category.push(item)
-      })
-      return res.render('new', { category })
-    })
+  const today = new Date().toISOString().slice(0, 10)
+  res.render('new', { today })
 })
 
 router.post('/', async (req, res) => {
