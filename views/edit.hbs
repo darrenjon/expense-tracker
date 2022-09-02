@@ -7,19 +7,19 @@
         </div>
         <div class="input-group mb-3" style="width: 500px;">
           <label class="input-group-text" for="name">名稱</label>
-          <input type="text" class="form-control" placeholder="name" id="name" name="name" value="{{ record.name }}" aria-label="name" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" placeholder="name" id="name" name="name" value="{{ record.name }}" aria-label="name" aria-describedby="basic-addon1" required>
         </div>
 
         <div class="input-group mb-3">
           <label class="input-group-text" for="date">日期</label>
           <input type="date" class="form-control" placeholder="date" id="date" name="date" value="{{ record.date }}" aria-label="date"
-            aria-describedby="basic-addon1">
+            aria-describedby="basic-addon1" required>
         </div>
 
         <div class="input-group mb-3">
           <label class="input-group-text" for="categoryId">類別</label>
           <select class="form-select" name="categoryName" id="categoryName">
-            <option value="{{ categorySelect }}" selected="selected">{{ categorySelect }}</option>
+            <option value="{{ categorySelect }}" selected>{{ categorySelect }}</option>
             {{#each categories}}
             <option value="{{ this.name }}">{{ this.name }}</option>
             {{/each}}
@@ -29,7 +29,7 @@
         <div class="input-group mb-3">
           <label class="input-group-text" for="number">金額</label>
           <input type="number" class="form-control" placeholder="amount" id="number" name="amount" value="{{ record.amount }}" aria-label="amount"
-            aria-describedby="basic-addon1">
+            aria-describedby="basic-addon1" required>
         </div>
 
         <div class="text-center align-self-center mt-4">

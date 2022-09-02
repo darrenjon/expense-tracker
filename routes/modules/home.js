@@ -24,4 +24,26 @@ router.get('/', async (req, res) => {
     .catch(error => console.error(error))
 })
 
+//sort function
+router.get('/:id', async (req, res) => {
+  const userId = req.user._id
+  const _id = req.params.id
+  const categories = await Category.find({}).lean()
+
+  return Record.find({ categoryId: _id, userId })
+    .populate('categoryId')
+    .lean()
+    .then(records => {
+      let totalAmount = 0
+      Array.from(records, record => {
+        record.date = record.date.toISOString().split('T')[0]
+        totalAmount += Number(record.amount)
+      })
+      return res.render('index', { records, totalAmount, categories })
+    })
+    .catch(error => console.error(error))
+
+})
+
+
 module.exports = router
