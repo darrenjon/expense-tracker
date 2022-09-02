@@ -3,7 +3,7 @@ const router = express.Router()
 const Category = require('../../models/category')
 const Record = require('../../models/record')
 
-//create new expense
+// create new expense
 router.get('/new', (req, res) => {
   const today = new Date().toISOString().slice(0, 10)
   res.render('new', { today })
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     })
 })
 
-//edit expense
+// edit expense
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -58,11 +58,11 @@ router.put('/:id', async (req, res) => {
       record.categoryId = category._id
       return record.save()
     })
-    .then(() => res.redirect(`/`))
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
-//Delete expense
+// Delete expense
 router.delete('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id

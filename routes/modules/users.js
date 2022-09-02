@@ -16,7 +16,7 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }))
 
-//register
+// register
 router.get('/register', (req, res) => {
   res.render('register')
 })
@@ -63,7 +63,7 @@ router.post('/register', (req, res) => {
   })
 })
 
-//logout
+// logout
 router.get('/logout', (req, res) => {
   req.logout()
   req.flash('success_msg', 'Logout Successful.')

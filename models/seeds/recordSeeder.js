@@ -47,7 +47,6 @@ const SEED_USER = {
   password: '12345678'
 }
 
-
 db.once('open', () => {
   bcrypt
     .genSalt(10)
@@ -77,5 +76,3 @@ db.once('open', () => {
       process.exit()
     })
 })
-
-

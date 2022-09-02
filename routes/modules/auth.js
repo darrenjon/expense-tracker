@@ -12,4 +12,4 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/users/login'
 }))
 
-module.exports = router 
+module.exports = router

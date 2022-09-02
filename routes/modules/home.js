@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     .sort({ date: '-1' })
     .then(records => {
       let totalAmount = 0
-      for (let record of records) {
+      for (const record of records) {
         record.date = record.date.toISOString().split('T')[0]
         totalAmount += record.amount
       }
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     .catch(error => console.error(error))
 })
 
-//sort function
+// sort function
 router.get('/:id', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -43,8 +43,6 @@ router.get('/:id', async (req, res) => {
       return res.render('index', { records, totalAmount, categories })
     })
     .catch(error => console.error(error))
-
 })
-
 
 module.exports = router
