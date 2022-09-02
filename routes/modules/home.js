@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
   await Record.find({ userId })
     .populate('categoryId')
     .lean()
+    .sort({ date: '-1' })
     .then(records => {
       let totalAmount = 0
       for (let record of records) {
