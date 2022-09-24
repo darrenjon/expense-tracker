@@ -19,9 +19,8 @@
         <div class="input-group mb-3">
           <label class="input-group-text" for="categoryId">類別</label>
           <select class="form-select" name="categoryName" id="categoryName">
-            <option value="{{ categorySelect }}" selected>{{ categorySelect }}</option>
             {{#each categories}}
-            <option value="{{ this.name }}">{{ this.name }}</option>
+            <option value="{{ this.name }}" {{this.selected}}>{{ this.name }}</option>
             {{/each}}
           </select>
         </div>

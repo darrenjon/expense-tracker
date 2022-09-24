@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     .sort({ date: '-1' })
     .then(records => {
       let totalAmount = 0
-      for (const record of records) {
+      for (let record of records) {
         record.date = record.date.toISOString().split('T')[0]
         totalAmount += record.amount
       }
@@ -26,23 +26,27 @@ router.get('/', async (req, res) => {
 })
 
 // sort function
-router.get('/:id', async (req, res) => {
+router.get('/category', async (req, res) => {
+  const category = req.query.category
   const userId = req.user._id
-  const _id = req.params.id
+  //取出所有的類別清單
   const categories = await Category.find({}).lean()
-
-  return Record.find({ categoryId: _id, userId })
+  categories.map(categories => {
+    if (categories.name == category) {
+      categories.selected = 'selected'
+    }
+  })
+  //依照點選的類別作篩選
+  const records = await Record
+    .find({ userId })
     .populate('categoryId')
     .lean()
-    .then(records => {
-      let totalAmount = 0
-      Array.from(records, record => {
-        record.date = record.date.toISOString().split('T')[0]
-        totalAmount += Number(record.amount)
-      })
-      return res.render('index', { records, totalAmount, categories })
-    })
-    .catch(error => console.error(error))
+
+  const filterRecord = records.filter(record => record.categoryId.name.includes(category))
+  let totalAmount = filterRecord.reduce((total, record) => { return total + Number(record.amount)}, 0)
+  records.forEach(records => records.date = records.date.toISOString().split('T')[0])
+
+  return res.render('index', { records: filterRecord, totalAmount, categories })
 })
 
 module.exports = router

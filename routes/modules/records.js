@@ -23,27 +23,20 @@ router.post('/', async (req, res) => {
 })
 
 // edit expense
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', async (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  return Record.findOne({ _id, userId })
-    .lean()
-    .then(record => {
-      return Category.find({})
-        .lean()
-        .then(categories => {
-          const categorySelect = categories.find(category => {
-            return category._id.toString() === record.categoryId.toString()
-          })
-          categories = categories.filter(item => {
-            return item.name !== categorySelect.name
-          })
-          record.date = record.date.toISOString().split('T')[0]
-          res.render('edit', { record, categories, categorySelect: categorySelect.name })
-        })
-    })
-    .catch(error => console.log(error))
+  const categories = await Category.find().lean()
+  const record = await Record.findOne({ _id, userId }).populate('categoryId').lean()
+  record.date = record.date.toISOString().split('T')[0]
+  categories.map(categories => {
+    if (categories.name == record.categoryId.name) {
+      categories.selected = 'selected'
+    }
+  })
+  res.render('edit', { record, categories })
 })
+
 
 router.put('/:id', async (req, res) => {
   const userId = req.user._id
